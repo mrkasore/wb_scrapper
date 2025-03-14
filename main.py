@@ -48,7 +48,7 @@ def wait_for_m3u8_url(driver, timeout=30):
             if ".m3u8" in message:
                 print(f"[+] Найден HLS-поток: {message}")
                 message = json.loads(message)
-                return message
+                return message['message']['params']['request']['url']
 
         time.sleep(1)
 
@@ -59,7 +59,6 @@ def get_m3u8_url():
     try:
         print("[*] Ожидание загрузки видео...")
         m3u8_url = wait_for_m3u8_url(driver)
-        m3u8_url = m3u8_url['message']['params']['request']['url']
         if m3u8_url:
             download_hls_video(m3u8_url)
         else:
